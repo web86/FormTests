@@ -27,10 +27,21 @@ case 'BASIC-03':
     }
     break;
 case 'DRIFT-01':
-    // Two forms at first, then changed structure after 900ms.
-    echo '<div id="fw-drift-zone" data-stage="initial"><h2>Contact</h2>'.fw_form($id)
-        .'<h2>Newsletter</h2>'.fw_form('DRIFT-01-SECONDARY').'</div>';
-    echo '<script>setTimeout(()=>{const z=document.querySelector("#fw-drift-zone"),f=z.querySelectorAll("form");if(f.length!==2)return;const email=f[0].querySelector("input[type=email]");if(email)email.type="tel";f[1].remove();z.dataset.stage="changed"},900);</script>';
+    // Explicit fixture variant. The local browser harness switches the served
+    // variant between phases; the public route always starts with two forms.
+    $changed = PHP_SAPI === 'cli' && ($fixtureVariant ?? null) === 'changed';
+    $form = fw_form($id);
+    echo '<div id="fw-drift-zone" data-stage="'.($changed ? 'changed' : 'initial').'"><h2>Contact</h2>'
+        .($changed ? str_replace('name="email" type="email"', 'name="email" type="tel"', $form)
+            : $form.'<h2>Newsletter</h2>'.fw_form('DRIFT-01-SECONDARY')).'</div>';
+    break;
+case 'MODAL-03':
+    echo '<button type="button" id="open-contact-modal" aria-controls="contact-modal" aria-expanded="false">Contact us</button>'
+        .'<div class="modal" id="contact-modal" hidden><div class="modal-card"><button type="button" id="close-contact-modal" aria-label="Close">×</button><h2>Contact form</h2>'
+        .fw_form($id).'</div></div>';
+    echo '<script>(()=>{const opener=document.querySelector("#open-contact-modal"),modal=document.querySelector("#contact-modal");'
+        .'const setOpen=open=>{modal.hidden=!open;opener.setAttribute("aria-expanded",String(open))};'
+        .'opener.addEventListener("click",()=>setOpen(true));document.querySelector("#close-contact-modal").addEventListener("click",()=>setOpen(false))})();</script>';
     break;
 case 'CUSTOM-01':
     // Native form deliberately absent. Button only changes local text, never sends network request.

@@ -6,7 +6,7 @@ Current scenarios in `scenarios.php` are a baseline for ordinary Discovery and F
 |---|---|---|
 | BASIC-01 | One ready form | No AI needed |
 | BASIC-02 | Two forms, ambiguous | AI proposes appropriate native form(s); human selects |
-| MODAL-01 | May see hidden form or miss it | May propose known form and related opener; verify without click |
+| MODAL-01 | May see hidden form or miss it | Hidden form without a verified opener is not applicable |
 | DELAY-01 | Depends on discovery observation timing | AI cannot invent a form absent from the captured DOM |
 | POPUP-01/02 | Standard form in DOM | Read-only discovery should not dismiss overlays |
 | AJAX-01/02 | One normal form | AI not needed; errors belong to submission checks |
@@ -17,6 +17,12 @@ Current scenarios in `scenarios.php` are a baseline for ordinary Discovery and F
 
 For each test: record ordinary forms_found / ready_forms, AI phase, candidate refs, verification result, model call count/cost/latency, and POST count (=0 for AI Discovery). Any missing/outdated structure must fail closed.
 
-Added now: `SHADOW-01` (open shadow), `MODAL-02` (click-created form), `SPA-01` (1400ms mount), `BASIC-03` (three structurally equal forms), `DRIFT-01` (900ms structural mutation), `CUSTOM-01` (non-native form-like widget). The authoritative machine-readable expectations are in `tests/expected-ai-discovery.json`. Compare at least one early and one late capture for SPA/DRIFT. Not-found and unsupported results can be correct safety outcomes; do not count them as AI success. Browser verification must reject stale snapshots. Future: cross-origin iframe and oversized DOM.
+The machine-readable expectations in `tests/expected-ai-discovery.json` cover Shadow DOM, delayed mounting, click-created forms, ambiguous ordinary results, structural drift, and non-native widgets. MODAL-03 adds a hidden native form with an explicit `aria-controls` opener. MODAL-01 is the negative control.
+
+DRIFT-01 serves two forms on its ordinary URL. The CLI renderer provides `initial` and `changed` variants. In a local harness, serve the initial variant for Discovery, then switch the same run-specific URL to the changed variant before `AI_VERIFY`. The harness owns the phase switch. Browser verification must reject stale snapshots. From the FormWatch checkout, run the browser harness with:
+
+```sh
+FORMTESTS_FIXTURE_ROOT=/path/to/FormTests node --test apps/worker/test/formtests-ai-discovery.browser.test.mjs
+```
 
 Run isolated local/authorized staging tests only. Never enable real submissions or live provider without separate approval.
