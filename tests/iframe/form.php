@@ -1,0 +1,1 @@
+<?php require dirname(__DIR__,2).'/lib.php'; ?><!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="/assets/style.css"></head><body class="iframe-body"><?=fw_form('IFRAME-01')?><script src="/assets/app.js"></script></body></html>

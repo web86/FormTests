@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteRule ^storage(?:/|$) - [F,L,NC]
+RewriteRule ^api/log\.php$ - [E=FORMTESTS_LOG_ENDPOINT:1]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^test/([A-Z0-9-]+)$ test.php?id=$1 [L,QSA]

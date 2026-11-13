@@ -1,0 +1,7 @@
+# Test submissions are intentionally not versioned
+/storage/*.log
+.env
+.env.*
+!.env.example
+.envrc
+*.local
