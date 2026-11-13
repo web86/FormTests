@@ -12,4 +12,10 @@ return [
     'COND-01' => ['category'=>'Conditional','title'=>'Select reveals required field','level'=>3,'expected'=>'PASS','features'=>['conditional-field','required']],
     'HONEY-01' => ['category'=>'Anti-spam','title'=>'Hidden honeypot must stay empty','level'=>3,'expected'=>'PASS','features'=>['honeypot']],
     'IFRAME-01' => ['category'=>'Iframe','title'=>'Form inside same-site iframe','level'=>3,'expected'=>'PASS','features'=>['iframe']],
+    'SHADOW-01' => ['category'=>'AI Discovery','title'=>'Open Shadow DOM with contact form','level'=>4,'expected'=>'STRUCTURAL_CANDIDATE','features'=>['shadow-open','read-only']],
+    'MODAL-02' => ['category'=>'AI Discovery','title'=>'Form created after explicit opener click','level'=>4,'expected'=>'NOT_FOUND_UNTIL_CLICK','features'=>['created-on-click','read-only']],
+    'SPA-01' => ['category'=>'AI Discovery','title'=>'Client-rendered form after 1400ms','level'=>4,'expected'=>'TIMING_DEPENDENT','features'=>['delayed-mount','read-only']],
+    'BASIC-03' => ['category'=>'AI Discovery','title'=>'Three structurally identical competing forms','level'=>4,'expected'=>'AMBIGUOUS_HUMAN_REVIEW','features'=>['three-forms','read-only']],
+    'DRIFT-01' => ['category'=>'AI Discovery','title'=>'DOM changes during independent verification','level'=>4,'expected'=>'STALE_VERIFY_REJECT','features'=>['dom-drift','read-only']],
+    'CUSTOM-01' => ['category'=>'AI Discovery','title'=>'Non-native JS form-like widget','level'=>4,'expected'=>'UNSUPPORTED_NATIVE_FORM','features'=>['no-form-tag','read-only']],
 ];

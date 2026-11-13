@@ -17,6 +17,6 @@ Current scenarios in `scenarios.php` are a baseline for ordinary Discovery and F
 
 For each test: record ordinary forms_found / ready_forms, AI phase, candidate refs, verification result, model call count/cost/latency, and POST count (=0 for AI Discovery). Any missing/outdated structure must fail closed.
 
-Suggested future cases: SHADOW-01 open shadow root; MODAL-02 form created only after click (expected not found without explicit pre-actions); SPA-01 timed client-side render; BASIC-03 three competing forms; DRIFT-01 replacing form between snapshot/verification; FRAME-02 cross-origin frame (must not bypass); FAKE-01 div/input/button with no native form (unsupported by current structural proposal); LIMIT-01 oversized DOM fails closed.
+Added now: `SHADOW-01` (open shadow), `MODAL-02` (click-created form), `SPA-01` (1400ms mount), `BASIC-03` (three structurally equal forms), `DRIFT-01` (900ms structural mutation), `CUSTOM-01` (non-native form-like widget). The authoritative machine-readable expectations are in `tests/expected-ai-discovery.json`. Compare at least one early and one late capture for SPA/DRIFT. Not-found and unsupported results can be correct safety outcomes; do not count them as AI success. Browser verification must reject stale snapshots. Future: cross-origin iframe and oversized DOM.
 
 Run isolated local/authorized staging tests only. Never enable real submissions or live provider without separate approval.

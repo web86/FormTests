@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "contract": "FormWatch Discovery 1.1",
+  "endpoint": "/test.php?id=",
+  "purpose": "Compare ordinary Discovery against advisory AI capture and independent read-only AI_VERIFY; no submission",
+  "invariants": [
+    "AI must never submit or fill data",
+    "No automatic opener click",
+    "No model-generated executable selector or JS",
+    "No false READY for absent, structurally stale or unsupported form",
+    "Human confirmation required before applying a verified candidate to draft"
+  ],
+  "cases": [
+    {
+      "id": "SHADOW-01",
+      "before": {
+        "light_dom_forms": 0,
+        "open_shadow_forms": 1
+      },
+      "expected": "AI may propose a native form in an open shadow root only after read-only structure validation; ordinary discovery may already find it"
+    },
+    {
+      "id": "MODAL-02",
+      "before": {
+        "live_forms": 0
+      },
+      "after_explicit_click": {
+        "live_forms": 1
+      },
+      "expected": "Without authorized PRE_ACTION form is absent: do not infer or click; only after explicit opener click can discovery see it"
+    },
+    {
+      "id": "SPA-01",
+      "before_delay": {
+        "live_forms": 0
+      },
+      "after_ms": 1400,
+      "after_delay": {
+        "live_forms": 1
+      },
+      "expected": "Compare early capture to later capture; never invent a form that has not mounted"
+    },
+    {
+      "id": "BASIC-03",
+      "before": {
+        "live_forms": 3,
+        "structurally_similar": true
+      },
+      "expected": "Ambiguous; at most three structurally verified candidates and human selection; cannot infer semantic purpose from safe DTO"
+    },
+    {
+      "id": "DRIFT-01",
+      "before_ms": 900,
+      "before": {
+        "live_forms": 2
+      },
+      "after_ms": 900,
+      "after": {
+        "live_forms": 1,
+        "changed_email_to_tel": true
+      },
+      "expected": "AI_VERIFY must reject stale capture from previous page state; never silently rebind"
+    },
+    {
+      "id": "CUSTOM-01",
+      "before": {
+        "live_forms": 0,
+        "role_form_widgets": 1
+      },
+      "expected": "No native FORM ref; unsupported/not found, no invented selector or clicking"
+    }
+  ],
+  "measurements": [
+    "ordinary forms_found and ready_forms",
+    "AI fallback trigger reason",
+    "snapshot completeness",
+    "provider latency and usage",
+    "candidate count",
+    "AI_VERIFY accepted/rejected",
+    "false positive count",
+    "HTTP POST count zero"
+  ]
+}
