@@ -43,7 +43,7 @@ case 'HONEY-01':
 case 'IFRAME-01':
     echo '<iframe class="form-frame" src="/tests/iframe/form.php" title="Contact form"></iframe>';
     break;
-case 'SHADOW-01': case 'MODAL-02': case 'SPA-01':
+case 'SHADOW-01': case 'MODAL-02': case 'MODAL-03': case 'SPA-01':
 case 'BASIC-03': case 'DRIFT-01': case 'CUSTOM-01':
     require __DIR__.'/tests/ai-fixtures.php';
     break;

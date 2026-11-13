@@ -30,6 +30,24 @@
       "expected": "Without authorized PRE_ACTION form is absent: do not infer or click; only after explicit opener click can discovery see it"
     },
     {
+      "id": "MODAL-01",
+      "before": {
+        "live_forms": 1,
+        "form_visible": false,
+        "opener_aria_controls": null
+      },
+      "expected": "A structurally verified hidden form without an explicit opener is not applicable"
+    },
+    {
+      "id": "MODAL-03",
+      "before": {
+        "live_forms": 1,
+        "form_visible": false,
+        "opener_aria_controls": "contact-modal"
+      },
+      "expected": "Read-only verification produces one applicable REVEAL_FORM pre-action without clicking or submitting"
+    },
+    {
       "id": "SPA-01",
       "before_delay": {
         "live_forms": 0
@@ -50,16 +68,18 @@
     },
     {
       "id": "DRIFT-01",
-      "before_ms": 900,
       "before": {
         "live_forms": 2
       },
-      "after_ms": 900,
       "after": {
         "live_forms": 1,
         "changed_email_to_tel": true
       },
-      "expected": "AI_VERIFY must reject stale capture from previous page state; never silently rebind"
+      "expected": "AI_VERIFY must reject stale capture from previous page state; never silently rebind",
+      "fixture_variants": [
+        "initial",
+        "changed"
+      ]
     },
     {
       "id": "CUSTOM-01",

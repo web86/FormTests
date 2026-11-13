@@ -28,13 +28,13 @@ Open http://127.0.0.1:8080/.
 - IFRAME: same-origin iframe
 - AI discovery fixtures: open Shadow DOM, click-created modal, SPA-like delayed form, ambiguous similar forms, DOM drift, non-native pseudo-form
 
-Each scenario is listed in `scenarios.php` (18 scenarios total). Human-only expected outcomes are displayed with `?debug=1`; **never use debug mode for automated discovery**, since it adds answer hints to the page.
+Each scenario is listed in `scenarios.php` (19 scenarios total). Human-only expected outcomes are displayed with `?debug=1`; **never use debug mode for automated discovery**, since it adds answer hints to the page.
 
 ## AI Discovery evaluation
 
 For each case, record: ordinary Discovery forms_found/ready_forms, whether AI fallback was triggered, safe snapshot available/truncated, model candidate refs, independent AI_VERIFY result, whether a human could apply the candidate to a draft, elapsed time and provider usage. AI Discovery is advisory and **must not submit** forms.
 
-The initial highest-value comparisons are BASIC-02 (multiple competing forms), MODAL-01 (hidden form), DELAY-01 (late DOM), and IFRAME-01 (same-origin iframe). Six AI-focused fixtures are implemented: `SHADOW-01`, `MODAL-02`, `SPA-01`, `BASIC-03`, `DRIFT-01`, `CUSTOM-01`. See `tests/expected-ai-discovery.json` for machine-readable assertions, limitations and safety invariants. Run `bash tests/smoke.sh` for PHP syntax and HTTP routing; it does **not** execute browser JavaScript or a real LLM.
+The initial comparisons include BASIC-02 (multiple competing forms), MODAL-01 (hidden form), DELAY-01 (late DOM), and IFRAME-01 (same-origin iframe). AI-focused fixtures cover SHADOW-01, MODAL-02, MODAL-03, SPA-01, BASIC-03, DRIFT-01, and CUSTOM-01. See [the test plan](tests/README.md) for the local Chromium harness. Run `bash tests/smoke.sh` for PHP syntax and HTTP routing across all 19 scenarios.
 
 ## Operational safety
 
